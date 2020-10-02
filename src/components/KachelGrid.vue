@@ -1,18 +1,36 @@
 <template>
-  <div class="kachel-grid" v-if="typeof kacheln[1] != 'undefined'">
-    <div class="kachel-wrapper" v-bind:class="{one:kachel.size == 1, two:kachel.size == 2, three:kachel.size == 3, four:kachel.size == 4}" v-for="kachel in kacheln" :key="kachel.id">
-            <h3>{{kachel.category}}</h3><br>
-            {{kachel.text}}
+<div>
+    <div class="button-wrapper">
+        <button v-on:click="change('1')" class="category-button">Kategorie 1</button>
+
+        <button v-on:click="change('2')" class="category-button">Kategorie 2</button>
+
+        <button v-on:click="change('3')" class="category-button">Kategorie 3</button>
+
+        <button v-on:click="changeBack()" class="category-button">Zurück</button>
     </div>
-  </div>
+        <div class="kachel-grid" v-if="typeof kacheln[1] != 'undefined'">
+            <div class="kachel-wrapper" 
+
+                v-bind:class="{one:kachel.size == 1, two:kachel.size == 2, three:kachel.size == 3, four:kachel.size == 4}"
+
+                v-for="kachel in kacheln" :key="kachel.id">
+
+                <div class="kachel-text">
+                    {{kachel.text}}
+                </div>
+            </div>
+        </div>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'corona',
+  name: 'kachelgrid',
   data() {
     return{
-      kacheln:[]
+      kacheln:[],
+      kachelnSave: [],
     }
   },
   created(){  
@@ -24,16 +42,40 @@ export default {
   methods:{
   setResults (results){
     this.kacheln = results;
+    this.kachelnSave = this.kacheln;
     console.log(this.kacheln)
-
-  }}
-}
+  },
+  change(name){
+      this.kacheln = [];
+        for (let index = 0; index < this.kachelnSave.length; index++) {
+            if (this.kachelnSave[index].category == name) {
+                this.kacheln.push(this.kachelnSave[index]);
+            }
+            
+        }
+      },
+    changeBack(){
+        this.kacheln = this.kachelnSave;
+    }
+      }
+  }
+  
 </script>
 
 <style scoped>
-*{
-    box-sizing:border-box
-}
+
+    .button-wrapper{
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        margin:auto;
+        width:80%;
+    }
+
+    .category-button{
+        margin:5px;
+        height:40px;
+    }
+
     .kachel-grid{
         display: grid;
         flex-wrap: wrap;
@@ -73,42 +115,51 @@ export default {
         margin: 0.5vw;
 
     }
-        @media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1000px) {
+
+    .button-wrapper{
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        margin:auto;
+        width:80%;
+    }
+
     .kachel-grid{
         display: grid;
         flex-wrap: wrap;
-        width: 100vw;
+        width: 90vw;
         margin: auto;
         background-color:rgb(139, 139, 139);
-        grid-template-columns: 32vw 32vw 32vw;
-        grid-template-rows: 33.33vw 33.33vw 33.33vw 33.33vw 33.33vw 33.33vw;
+        grid-template-columns: 30vw 30vw 30vw;
+        grid-template-rows: 30vw 30vw 30vw 30vw 30vw 30vw;
         grid-auto-flow: dense
     }
     .one{
-        width: 31vw;
-        height:31vw;
+        width: 29vw;
+        height:29vw;
         background-color: rgb(16, 0, 160);
         margin: 0.5vw;
     }
     .two{
         grid-row: span 2;
-        width: 32.33vw;
-        height:65.66vw;
+        width: 29vw;
+        height:59vw;
         background-color: rgb(255, 0, 0);
         margin: 0.5vw;
     }
     .three{
         grid-column: span 2;
-        width: 65.66vw;
-        height:32.33vw;
+        width: 59vw;
+        height:29vw;
         background-color: rgb(2, 97, 18);
         margin: 0.5vw;
     }
     .four{
         grid-column: span 2;
         grid-row: span 2;
-        width: 65.66vw;
-        height:65.66vw;
+        width: 59vw;
+        height:59vw;
         background-color: rgb(185, 196, 31);
         margin: 0.5vw;
 
@@ -118,37 +169,40 @@ export default {
     .kachel-grid{
         display: grid;
         flex-wrap: wrap;
-        width: 100%;
+        width: 94vw;
         margin: auto;
         background-color:rgb(139, 139, 139);
-        grid-template-columns: 50vw 50vw;
-        grid-template-rows: 50vw 50vw 50vw 50vw  50vw 50vw  50vw 50vw  50vw 50vw ;
+        grid-template-columns: 47vw 47vw;
+        grid-template-rows: 47vw 47vw 47vw 47vw  47vw 47vw  47vw 47vw  47vw 47vw 47vw 47vw ;
         grid-auto-flow: dense
     }
     .one{
-        width: 50vw;
-        height:50vw;
+        width: 46vw;
+        height:46vw;
         background-color: rgb(16, 0, 160);
+        margin: 0.5vw;
     }
     .two{
         grid-row: span 2;
-        width: 50vw;
-        height:100vw;
+        width: 46vw;
+        height:93vw;
         background-color: rgb(255, 0, 0);
+        margin: 0.5vw;
     }
     .three{
         grid-column: span 2;
-        width: 100vw;
-        height:50vw;
+        width: 93vw;
+        height:46vw;
         background-color: rgb(2, 97, 18);
+        margin: 0.5vw;
     }
     .four{
         grid-column: span 2;
         grid-row: span 2;
-        width: 100vw;
-        height:100vw;
+        width: 93vw;
+        height:93vw;
         background-color: rgb(185, 196, 31);
-
+        margin: 0.5vw;
     }
 }
 </style>
